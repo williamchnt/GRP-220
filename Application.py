@@ -51,6 +51,19 @@ detection_frame.grid(row = 2, column = 0, sticky = E, padx = 80, pady = 30)
 button1.pack(pady = 10)
 button2.pack(pady = 10)
 
-#affichage de la fenêtre
+#function des boutons
+def changeOnHover(button):
+      
+    button.bind("<Enter>", func=lambda e: button.config(
+        cursor = "hand2", bg = "goldenrod3"))
+    
+    button.bind("<Leave>", func=lambda e: button.config(
+        bg="white"))
+     
+#affichage de la fenêtre + application des fonctions
+
+changeOnHover(button1)
+changeOnHover(button2)
+changeOnHover(button_import)
 appli.mainloop()
 
