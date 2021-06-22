@@ -3,67 +3,91 @@ from PIL import ImageTk, Image
 
 #fenêtre principale
 appli = Tk()
+width = 950
+height = 700
 
 #creation des frames 
-detection_frame = Frame(appli, bg = "#16A8DB", bd = 1, relief = SUNKEN, padx = 15, pady = 15)
-import_frame = Frame(appli, bg = "#16A8DB", bd = 1, relief = SUNKEN, padx = 15, pady = 15)
+#detection_frame = Frame(appli, bg = "#16A8DB", bd = 1, relief = SUNKEN, padx = 15, pady = 15)
+#import_frame = Frame(appli, bg = "#16A8DB", bd = 1, relief = SUNKEN, padx = 15, pady = 15)
 
 
 #modification de la fenêtre principale
 appli.title("Pr'eau'Pre")
 #appli.geometry("900x600")
-#appli.minsize(700,400)
-appli.config(background = "#4065A4")
+appli.minsize(width,height)
+#appli.config(background = "#4065A4")
 appli.iconbitmap("logo_ocean_six.ico")
 
-#contenu de la fenêtre
-title = Label(appli, text = "Bienvenue sur Pr'eau'Pre", font = ("Ubisoft Sans Bold",40), bg = "#16A8DB", fg = "black")
+#application d'un background pour la fenêtre principale
+bg_appli = PhotoImage(file = "backgroundAppli.png")
+bg_label = Label(appli, image = bg_appli)
+bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
 #ajout des boutons
-button1 = Button(detection_frame, text = "Detection photo", font = ("Ubisoft Sans Bold",20))
-button2 = Button(detection_frame, text = "Detection video", font = ("Ubisoft Sans Bold",20))
 
+button_border = Frame(
+    appli, 
+    highlightbackground = "white", 
+    highlightthickness = 4, 
+    bd=0
+)
 
-#ajout des images
-height = 220
-width = 300
+button_photo = Button(
+    appli, 
+    text = "Detection photo", 
+    font = ("Ubisoft Sans Bold",20),
+    bd = 5,
+    bg = "#05afde",
+    fg = "white",
+    relief = "flat"  
+)
 
-logo = Image.open("logo_ocean_six_with_text.png")
-resized = logo.resize((300,225), Image.ANTIALIAS)
-final_logo = ImageTk.PhotoImage(resized)
+button_video = Button(
+    appli, 
+    text = "Detection video", 
+    font = ("Ubisoft Sans Bold",20),
+    bd = 5,
+    bg = "#05afde",
+    fg = "white",
+    relief = "flat"
+)
+
 download_logo = Image.open("download_logo.png")
 rendu = ImageTk.PhotoImage(download_logo)
 
-button_import = Button(import_frame, text = "Importer photos/videos ", font = ("Ubisoft Sans Bold",20), image = rendu, compound = RIGHT)
+button_import = Button(
+    button_border, 
+    text = "Importer photos/videos ", 
+    font = ("Ubisoft Sans Bold",20), 
+    image = rendu, 
+    compound = RIGHT, 
+    bd = 5,
+    bg = "#05afde",
+    fg = "white",
+    relief = "flat"
+)
 
-canvas = Canvas(appli, width = width, height = height, bg = "white", bd = 0, highlightthickness = 0)
-canvas.create_image(width/2, height/2, image = final_logo)
+#Placement des boutons sur l'appli
+button_photo.place(x = width/2 - 100, y = 510)
+button_video.place(x = width/2 - 100, y = 580)
 
-#placement des éléments
-title.grid(row = 0, column = 0, padx = 100)
-
-canvas.grid(row = 1, column = 0, pady = 30)
-
-import_frame.grid(row = 2, column = 0, sticky = W, padx = 40)
+button_border.pack()
 button_import.pack()
-
-detection_frame.grid(row = 2, column = 0, sticky = E, padx = 80, pady = 30)
-button1.pack(pady = 10)
-button2.pack(pady = 10)
+button_border.place(x = width/2 - 145, y = 435)
 
 #function des boutons
 def changeOnHover(button):
       
     button.bind("<Enter>", func=lambda e: button.config(
-        cursor = "hand2", bg = "goldenrod3"))
+        cursor = "hand2", bg = "white", fg = "black"))
     
     button.bind("<Leave>", func=lambda e: button.config(
-        bg="white"))
+        bg="#05afde", fg = "white"))
      
 #affichage de la fenêtre + application des fonctions
 
-changeOnHover(button1)
-changeOnHover(button2)
+changeOnHover(button_photo)
+changeOnHover(button_video)
 changeOnHover(button_import)
 appli.mainloop()
 
