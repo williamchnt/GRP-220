@@ -25,15 +25,29 @@ bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
 #ajout des boutons
 
-button_border = Frame(
+button_border_import = Frame(
     appli, 
     highlightbackground = "white", 
-    highlightthickness = 4, 
+    highlightthickness = 2, 
+    bd=0
+)
+
+button_border_photo = Frame(
+    appli, 
+    highlightbackground = "white", 
+    highlightthickness = 2, 
+    bd=0
+)
+
+button_border_video = Frame(
+    appli, 
+    highlightbackground = "white", 
+    highlightthickness = 2, 
     bd=0
 )
 
 button_photo = Button(
-    appli, 
+    button_border_photo, 
     text = "Detection photo", 
     font = ("Ubisoft Sans Bold",20),
     bd = 5,
@@ -43,7 +57,7 @@ button_photo = Button(
 )
 
 button_video = Button(
-    appli, 
+    button_border_video, 
     text = "Detection video", 
     font = ("Ubisoft Sans Bold",20),
     bd = 5,
@@ -56,7 +70,7 @@ download_logo = Image.open("download_logo.png")
 rendu = ImageTk.PhotoImage(download_logo)
 
 button_import = Button(
-    button_border, 
+    button_border_import, 
     text = "Importer photos/videos ", 
     font = ("Ubisoft Sans Bold",20), 
     image = rendu, 
@@ -68,12 +82,18 @@ button_import = Button(
 )
 
 #Placement des boutons sur l'appli
-button_photo.place(x = width/2 - 100, y = 510)
-button_video.place(x = width/2 - 100, y = 580)
 
-button_border.pack()
+button_border_import.pack()
 button_import.pack()
-button_border.place(x = width/2 - 145, y = 435)
+button_border_import.place(x = width/2 - 145, y = 435)
+
+button_border_photo.pack()
+button_photo.pack()
+button_border_photo.place(x = width/2 - 100, y = 515)
+
+button_border_video.pack()
+button_video.pack()
+button_border_video.place(x = width/2 - 100, y = 590)
 
 #function des boutons
 def changeOnHover(button):
