@@ -1,5 +1,5 @@
-class DetectVisage:
-    cascade = "cascade-V0.xml"
+class Detect:
+    cascade = "cascade-V0.1.xml"
     
     
     def imageRead (self, image):
@@ -24,9 +24,19 @@ class DetectVisage:
         else:
             print("Erreur input")
 
+    def DetectAllImages (self):
+        import os
+
+        entries = os.listdir('import/')
+
+        for entry in entries:
+
+            print(entry)
+            self.imageSave(entry)
+
+
     def imageSave (self, image):
         import cv2
-        import operator
 
         if(isinstance(image, str)):
 
@@ -38,8 +48,9 @@ class DetectVisage:
                 face=face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=3)
                 for x, y, w, h in face:
                     cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                newTitle=image+"-detect.jpg"
+                newTitle="./result/"+image+"-detect.jpg"
                 cv2.imwrite(newTitle, img)
+                del img
 
         else:
             print("Erreur input")
@@ -109,8 +120,10 @@ class DetectVisage:
         cv2.destroyAllWindows()
 
 
-model = DetectVisage()
-model.imageRead("test-image.jpg")
-#model.imageSave("image compr.png")
+model = Detect()
+#model.imageRead("test-image.jpg")
+#model.imageSave("plastique.jpg")
+model.DetectAllImages()
+#model.imageSave("test-image.jpg")
 #model.detectLive()
 #model.video("test.mp4")
