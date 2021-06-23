@@ -15,6 +15,7 @@ height = 700
 appli.title("Pr'eau'Pre")
 #appli.geometry("900x600")
 appli.minsize(width,height)
+appli.maxsize(width,height)
 #appli.config(background = "#4065A4")
 appli.iconbitmap("logo_ocean_six.ico")
 
