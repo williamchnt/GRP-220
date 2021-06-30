@@ -1,0 +1,63 @@
+# GRP-220
+
+Detect Class documentation :
+
+instanciation model : mymodel = Detect()
+
+Méthodes :
+
+** DetectAll (pathImport, pathResult) 
+pathImport : String
+pathResult : String 
+
+Save all images and vidéos from pathImport to pathResult using detection.
+
+** DetectAllImage (pathImport, pathResult) 
+pathImport : String
+pathResult : String 
+
+Save all images from pathImport to pathResult using detection.
+
+** DetectAllVideo (pathImport, pathResult) 
+pathImport : String
+pathResult : String 
+
+Save all vidéos from pathImport to pathResult using detection.
+
+** imageRead (image) 
+image : String
+
+Show image with detection
+
+** imageRead (image) 
+image : String
+
+Show image with detection
+
+** imageSave (image, pathImport, pathResult) 
+image : String
+pathImport : String
+pathResult : String 
+
+Save an image with detection from pathImport to pathResult
+
+** video (video) 
+video : String
+
+Show video with detection
+
+** videoSave (video, pathImport, pathResult) 
+video : String
+pathImport : String
+pathResult : String 
+
+Save an vidéo with detection from pathImport to pathResult
+
+** detectLive () 
+
+Show vidéo from connected camera like webcam with real time detection
+
+---- Exemple :
+model = Detect()
+model.DetectAll("C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
+model.videoSave("test2.mp4","C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
