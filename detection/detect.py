@@ -143,8 +143,10 @@ class Detect:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-        fourcc=cv2.VideoWriter_fourcc(*'MP4V')
-        outputTitle=pathResult+"/"+video
+        fourcc=cv2.VideoWriter_fourcc(*'XVID')
+        
+        outputTitle=pathResult+"/"+video+".avi"
+        print(outputTitle)
         out=cv2.VideoWriter(outputTitle,fourcc,20.0, (height,  width))
 
             # Check if camera opened successfully
@@ -152,6 +154,7 @@ class Detect:
             print("Error opening video stream or file")
 
         frameCount = 1
+        Savepour=0
         # Read until video is completed
         while(cap.isOpened()):
         # Capture frame-by-frame
@@ -164,7 +167,10 @@ class Detect:
                     # Display the resulting frame
                 out.write(frame)
                 pour = int((frameCount*100)/length)
-                print("Analyse "+video+" : "+str(pour)+"%")
+                if(pour != Savepour):
+                    print("Analyse "+video+" : "+str(pour)+"%")
+                    Savepour=pour
+
                 frameCount+=1
                 #cv2.imshow('out', frame)
 
