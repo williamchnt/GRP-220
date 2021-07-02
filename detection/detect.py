@@ -1,6 +1,12 @@
+from tkinter import Button, Label, Pack, StringVar, Tk, mainloop
+from tkinter import ttk
+import tkinter
+import time
+from tkinter.constants import HORIZONTAL
+from tkinter.ttk import Progressbar
+
 class Detect:
     cascade = "detection/cascade-V0.1.xml"
-    
     
     def imageRead (self, image):
         import cv2
@@ -22,13 +28,19 @@ class Detect:
         else:
             print("Erreur input")
 
+    
     def DetectAll (self, pathImport, pathResult):
         import os
+        window = Loading()
 
         entries = os.listdir(pathImport)
 
+        frameCount = 1
+        Savepour=0
+        length=len(entries)
         for entry in entries:
 
+            window.currentTask(entry)
             extension = entry[-3]+entry[-2]+entry[-1]
             if((extension=="jpg")or(extension=="png")):
                 print("detecting : "+entry)
@@ -37,6 +49,14 @@ class Detect:
             if((extension=="mp4")):
                 print("detecting : "+entry)
                 self.videoSave(entry, pathImport ,pathResult)
+
+            pour = int((frameCount*100)/length)
+            if(pour != Savepour):
+                print("Analyse Total :"+str(pour)+"%")
+                window.step(pour)
+                Savepour=pour
+
+            frameCount+=1
 
         print("Program ending")
 
@@ -44,6 +64,10 @@ class Detect:
         import os
 
         entries = os.listdir(pathImport)
+        frameCount = 1
+        Savepour=0
+        length=len(entries)
+        window = Loading()
 
         for entry in entries:
 
@@ -52,12 +76,24 @@ class Detect:
                 print("detecting : "+entry)
                 self.imageSave(entry,pathImport, pathResult)
 
+            pour = int((frameCount*100)/length)
+            if(pour != Savepour):
+                print("Analyse Total :"+str(pour)+"%")
+                window.step(pour)
+                Savepour=pour
+
+            frameCount+=1
+
         print("Program ending")
 
     def DetectAllVideo (self, pathImport, pathResult):
         import os
 
         entries = os.listdir(pathImport)
+        frameCount = 1
+        Savepour=0
+        length=len(entries)
+        window = Loading()
 
         for entry in entries:
 
@@ -66,6 +102,14 @@ class Detect:
             if((extension=="mp4")):
                 print("detecting : "+entry)
                 self.videoSave(entry, pathImport ,pathResult)
+
+            pour = int((frameCount*100)/length)
+            if(pour != Savepour):
+                print("Analyse Total :"+str(pour)+"%")
+                window.step(pour)
+                Savepour=pour
+
+            frameCount+=1
 
         print("Program ending")
 
@@ -136,7 +180,9 @@ class Detect:
         import cv2
 
         face_cascade=cv2.CascadeClassifier(self.cascade)
-
+        window = Loading()
+        window.currentTask(video)
+        window.setTitle(video)
         toDetect = pathImport+"/"+video
         cap=cv2.VideoCapture(toDetect)
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -144,10 +190,9 @@ class Detect:
         length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
         fourcc=cv2.VideoWriter_fourcc(*'XVID')
-        
-        outputTitle=pathResult+"/"+video+".avi"
-        print(outputTitle)
-        out=cv2.VideoWriter(outputTitle,fourcc,20.0, (height,  width))
+        newtitle = video[:-4]
+        outputTitle=pathResult+"/"+newtitle+".avi"
+        out=cv2.VideoWriter(outputTitle,fourcc,30.0, (height,  width))
 
             # Check if camera opened successfully
         if (cap.isOpened()== False): 
@@ -169,6 +214,7 @@ class Detect:
                 pour = int((frameCount*100)/length)
                 if(pour != Savepour):
                     print("Analyse "+video+" : "+str(pour)+"%")
+                    window.step(pour)
                     Savepour=pour
 
                 frameCount+=1
@@ -205,7 +251,33 @@ class Detect:
             cv2.imshow('video', frame)
         cap.release()
         cv2.destroyAllWindows()
+    
+class Loading:
 
+    def __init__(self):
+        self.window = Tk()
+        self.window.geometry("600x100")
+        self.window.title("Detection")
+        self.progress = Progressbar(self.window, orient = HORIZONTAL,length = 100, mode = 'determinate')
+        self.progress.pack(pady=10)
+        self.percent = StringVar()
+        self.text = StringVar()
+        self.taskLabel = Label(self.window,textvariable=self.text).pack()
+        self.percentLabel = Label(self.window,textvariable=self.percent).pack()     
+
+    def step(self, value):
+        self.progress['value'] = value
+        self.percent.set(str(value)+"% completed")
+        self.window.update()
+
+    def currentTask(self, task):
+        self.text.set("Detecting : "+task)
+
+    def setTitle(self,title):
+        self.window.title("Vidéo detection : "+title)
+
+    def destroy(self):
+        self.destroy()
 
 model = Detect()
 model.DetectAll("C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
