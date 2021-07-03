@@ -190,7 +190,7 @@ class Detect:
         fourcc=cv2.VideoWriter_fourcc(*'MJPG')
         newtitle = video[:-4]
         outputTitle=pathResult+"/"+newtitle+".avi"
-        out=cv2.VideoWriter(outputTitle,fourcc,30.0, (height,  width))
+        out=cv2.VideoWriter(outputTitle,fourcc,30.0, (1920,1080))
 
             # Check if camera opened successfully
         if (cap.isOpened()== False): 
