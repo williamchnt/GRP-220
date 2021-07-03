@@ -279,6 +279,6 @@ class Loading:
     def destroy(self):
         self.destroy()
 
-model = Detect()
-model.DetectAll("C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
+#model = Detect()
+#model.DetectAll("C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
 #model.videoSave("test2.mp4","C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")

@@ -1,11 +1,16 @@
 from tkinter import *
 from PIL import ImageTk, Image
-#from detection import detect
+import os
+from tkinter import filedialog, messagebox
+import detection.detect as detect
 
 #fenêtre principale
 appli = Tk()
 width = 950
 height = 700
+
+importDataPath = ""
+detectionResultsPath = ""
 
 #modification de la fenêtre principale
 appli.title("Pr'eau'Pre")
@@ -19,12 +24,48 @@ bg_label = Label(appli, image = bg_appli)
 bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
 #Fonctions des boutons
+
 def importData():
-    return 0
-def detectPhoto():
-    return 0
-def detectVideo():
-    return 0
+    global importDataPath 
+    importDataPath = filedialog.askdirectory()
+    
+    messagebox.showinfo(
+        title="Information", 
+        message="Seuls les fichiers suivants (jpeg, png, mp4) seront analysés."
+    )
+    
+def detectData():
+    global importDataPath
+    global detectionResultsPath
+
+    if not importDataPath == "":
+        messagebox.showinfo(
+            title="Information", 
+            message="Merci de sélectionner un dossier où nous pourrons \nstocker les résulats de la détection."
+        )
+
+        detectionResultsPath = filedialog.askdirectory()
+
+        if not detectionResultsPath == "":
+            if (len(os.listdir(detectionResultsPath)) == 0):
+                model = detect.Detect()
+                model.DetectAll(importDataPath, detectionResultsPath)
+
+            else:
+                messagebox.showerror(
+                    title="Error", 
+                    message="Le dossier sélectionné n'est pas vide."
+                )
+        else:
+            messagebox.showerror(
+                title="Error", 
+                message="Aucun dossier n'a été sélectionné."
+            )
+    else:
+        messagebox.showerror(
+                title="Error", 
+                message="Aucune donnée n'a été importé."
+            )
 
 #Frames des boutons
 button_border_import = Frame(
@@ -34,14 +75,7 @@ button_border_import = Frame(
     bd=0,
 )
 
-button_border_photo = Frame(
-    appli, 
-    highlightbackground = "white", 
-    highlightthickness = 2, 
-    bd=0,
-)
-
-button_border_video = Frame(
+button_border_detection = Frame(
     appli, 
     highlightbackground = "white", 
     highlightthickness = 2, 
@@ -49,26 +83,15 @@ button_border_video = Frame(
 )
 
 #Boutons
-button_photo = Button(
-    button_border_photo, 
-    text = "Detection photo", 
-    font = ("Ubisoft Sans Bold",20),
+button_detection = Button(
+    button_border_detection, 
+    text = "Commencer la détection", 
+    font = ("Ubisoft Sans Bold",27),
     bd = 5,
     bg = "#05afde",
     fg = "white",
     relief = "flat",
-    command = detectPhoto
-)
-
-button_video = Button(
-    button_border_video, 
-    text = "Detection video", 
-    font = ("Ubisoft Sans Bold",20),
-    bd = 5,
-    bg = "#05afde",
-    fg = "white",
-    relief = "flat",
-    command = detectVideo
+    command = detectData
 )
 
 download_logo = Image.open("ressources/download_logo.png")
@@ -77,7 +100,7 @@ rendu = ImageTk.PhotoImage(download_logo)
 button_import = Button(
     button_border_import, 
     text = "Importer photos/videos ", 
-    font = ("Ubisoft Sans Bold",20), 
+    font = ("Ubisoft Sans Bold",27), 
     image = rendu, 
     compound = RIGHT, 
     bd = 5,
@@ -90,15 +113,12 @@ button_import = Button(
 #Placement des boutons sur l'appli
 button_border_import.pack()
 button_import.pack()
-button_border_import.place(x = width/2 - 145, y = 435)
+button_border_import.place(x = width/2 - 205, y = 445)
 
-button_border_photo.pack()
-button_photo.pack()
-button_border_photo.place(x = width/2 - 100, y = 515)
+button_border_detection.pack()
+button_detection.pack()
+button_border_detection.place(x = width/2 - 212, y = 545)
 
-button_border_video.pack()
-button_video.pack()
-button_border_video.place(x = width/2 - 100, y = 590)
 
 #function d'animation des boutons
 def changeOnHover(button):
@@ -110,8 +130,7 @@ def changeOnHover(button):
         bg="#05afde", fg = "white"))
 
 #affichage de la fenêtre + application des fonctions
-changeOnHover(button_photo)
-changeOnHover(button_video)
+changeOnHover(button_detection)
 changeOnHover(button_import)
 appli.mainloop()
 
