@@ -1,7 +1,4 @@
-from tkinter import Button, Label, Pack, StringVar, Tk, mainloop
-from tkinter import ttk
-import tkinter
-import time
+from tkinter import Label, StringVar, Tk
 from tkinter.constants import HORIZONTAL
 from tkinter.ttk import Progressbar
 
@@ -58,6 +55,7 @@ class Detect:
 
             frameCount+=1
 
+        window.destroy()
         print("Program ending")
 
     def DetectAllImage (self, pathImport, pathResult):
@@ -189,7 +187,7 @@ class Detect:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-        fourcc=cv2.VideoWriter_fourcc(*'XVID')
+        fourcc=cv2.VideoWriter_fourcc(*'MJPG')
         newtitle = video[:-4]
         outputTitle=pathResult+"/"+newtitle+".avi"
         out=cv2.VideoWriter(outputTitle,fourcc,30.0, (height,  width))
@@ -228,6 +226,7 @@ class Detect:
 
         cap.release()
         out.release()
+        window.destroy()
         cv2.destroyAllWindows()
 
     def detectLive(self):
@@ -277,7 +276,7 @@ class Loading:
         self.window.title("Vidéo detection : "+title)
 
     def destroy(self):
-        self.destroy()
+        self.window.destroy()
 
 #model = Detect()
 #model.DetectAll("C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
