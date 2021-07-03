@@ -27,6 +27,12 @@ bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
 def importData():
     global importDataPath 
+
+    messagebox.showwarning(
+        title="Warning", 
+        message="Penser à vérifier le nom de chacun de vos fichiers.\nCertains caractères spéciaux ne sont pas pris en compte (accent, espace et apostophe)."
+    )
+
     importDataPath = filedialog.askdirectory()
     
     messagebox.showinfo(
@@ -41,7 +47,7 @@ def detectData():
     if not importDataPath == "":
         messagebox.showinfo(
             title="Information", 
-            message="Merci de sélectionner un dossier où nous pourrons \nstocker les résulats de la détection."
+            message="Veuillez sélectionner un dossier \noù les résulats de la détection seront stockés."
         )
 
         detectionResultsPath = filedialog.askdirectory()
