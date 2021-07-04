@@ -1,4 +1,4 @@
-from tkinter import Label, StringVar, Tk
+from tkinter import Label, StringVar, Tk, messagebox
 from tkinter.constants import HORIZONTAL
 from tkinter.ttk import Progressbar
 
@@ -55,7 +55,12 @@ class Detect:
 
             frameCount+=1
 
+        messagebox.showinfo(
+        title="Succès", 
+        message="Détection finit"
+        )
         window.destroy()
+        
         print("Program ending")
 
     def DetectAllImage (self, pathImport, pathResult):
@@ -82,6 +87,11 @@ class Detect:
 
             frameCount+=1
 
+        messagebox.showinfo(
+        title="Succès", 
+        message="Détection finit"
+        )
+        window.destroy()
         print("Program ending")
 
     def DetectAllVideo (self, pathImport, pathResult):
@@ -109,6 +119,11 @@ class Detect:
 
             frameCount+=1
 
+        messagebox.showinfo(
+        title="Succès", 
+        message="Détection finit"
+        )
+        window.destroy()
         print("Program ending")
 
 
@@ -131,6 +146,7 @@ class Detect:
                 del img
 
         else:
+
             print("Erreur input")
 
     def video(self, video):
@@ -142,6 +158,10 @@ class Detect:
 
                 # Check if camera opened successfully
             if (cap.isOpened()== False): 
+                messagebox.showwarning(
+                    title="Warning", 
+                    message="Error opening video stream or file"
+                )
                 print("Error opening video stream or file")
 
             # Read until video is completed
@@ -190,10 +210,14 @@ class Detect:
         fourcc=cv2.VideoWriter_fourcc(*'MJPG')
         newtitle = video[:-4]
         outputTitle=pathResult+"/"+newtitle+".avi"
-        out=cv2.VideoWriter(outputTitle,fourcc,30.0, (1920,1080))
+        out=cv2.VideoWriter(outputTitle,fourcc,30.0, (width,height))
 
             # Check if camera opened successfully
         if (cap.isOpened()== False): 
+            messagebox.showwarning(
+                    title="Warning", 
+                    message="Error opening video stream or file"
+                )
             print("Error opening video stream or file")
 
         frameCount = 1
