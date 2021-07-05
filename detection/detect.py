@@ -33,8 +33,8 @@ class Detect:
         entries = os.listdir(pathImport)
 
         frameCount = 1
-        Savepour=0
-        length=len(entries)
+        Savepour = 0
+        length = len(entries)
         for entry in entries:
 
             window.currentTask(entry)
@@ -283,8 +283,8 @@ class Loading:
         self.window.title("Detection")
         self.progress = Progressbar(self.window, orient = HORIZONTAL,length = 100, mode = 'determinate')
         self.progress.pack(pady=10)
-        self.percent = StringVar()
-        self.text = StringVar()
+        self.percent = StringVar(self.window)
+        self.text = StringVar(self.window)
         self.taskLabel = Label(self.window,textvariable=self.text).pack()
         self.percentLabel = Label(self.window,textvariable=self.percent).pack()
         self.window.attributes("-topmost", True) 
@@ -302,7 +302,3 @@ class Loading:
 
     def destroy(self):
         self.window.destroy()
-
-#model = Detect()
-#model.DetectAll("C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
-#model.videoSave("test2.mp4","C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/import/img", "C:/Users/Utilisateur/Documents/efrei/L3/mastercamp/git/GRP-220-2/ressources/result")
