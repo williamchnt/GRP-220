@@ -24,7 +24,6 @@ bg_label = Label(appli, image = bg_appli)
 bg_label.place(x = 0, y = 0, relwidth = 1, relheight = 1)
 
 #Fonctions des boutons
-
 def importData():
     global importDataPath 
 
@@ -139,4 +138,3 @@ def changeOnHover(button):
 changeOnHover(button_detection)
 changeOnHover(button_import)
 appli.mainloop()
-

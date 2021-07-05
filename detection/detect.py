@@ -286,7 +286,8 @@ class Loading:
         self.percent = StringVar()
         self.text = StringVar()
         self.taskLabel = Label(self.window,textvariable=self.text).pack()
-        self.percentLabel = Label(self.window,textvariable=self.percent).pack()     
+        self.percentLabel = Label(self.window,textvariable=self.percent).pack()
+        self.window.attributes("-topmost", True) 
 
     def step(self, value):
         self.progress['value'] = value
