@@ -39,13 +39,28 @@ class Detect:
 
             window.currentTask(entry)
             extension = entry[-3]+entry[-2]+entry[-1]
-            if((extension=="jpg")or(extension=="png")):
+            if((extension=="jpg")or(extension=="png")or(extension=="PNG")or(extension=="JPG")):
                 print("detecting : "+entry)
-                self.imageSave(entry,pathImport, pathResult)
+                try:
+                    self.imageSave(entry,pathImport, pathResult)
+                except:
 
-            if((extension=="mp4")):
+                    messagebox.showerror(
+                        title="Error", 
+                        message="Error detect"
+                    )
+
+            if((extension=="mp4")or(extension=="MP4")):
                 print("detecting : "+entry)
-                self.videoSave(entry, pathImport ,pathResult)
+                try:
+
+                    self.videoSave(entry, pathImport ,pathResult)
+                except:
+
+                    messagebox.showerror(
+                        title="Error", 
+                        message="Error detect"
+                    )
 
             pour = int((frameCount*100)/length)
             if(pour != Savepour):
@@ -75,7 +90,7 @@ class Detect:
         for entry in entries:
 
             extension = entry[-3]+entry[-2]+entry[-1]
-            if((extension=="jpg")or(extension=="png")):
+            if((extension=="jpg")or(extension=="png")or(extension=="PNG")or(extension=="JPG")):
                 print("detecting : "+entry)
                 self.imageSave(entry,pathImport, pathResult)
 
@@ -107,7 +122,7 @@ class Detect:
 
             extension = entry[-3]+entry[-2]+entry[-1]
 
-            if((extension=="mp4")):
+            if((extension=="mp4")or(extension=="MP4")):
                 print("detecting : "+entry)
                 self.videoSave(entry, pathImport ,pathResult)
 
@@ -132,12 +147,15 @@ class Detect:
 
         if(isinstance(image, str)):
                 toDetect = pathImport+"/"+image
-            
+
                 face_cascade=cv2.CascadeClassifier(self.cascade)
+ 
                 img = cv2.imread(toDetect, cv2.IMREAD_COLOR)
 
                 gray=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
                 face=face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=3)
+                
                 for x, y, w, h in face:
                     cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
                 
