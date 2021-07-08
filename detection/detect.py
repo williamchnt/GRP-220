@@ -1,3 +1,4 @@
+import operator
 from tkinter import Label, StringVar, Tk, messagebox
 from tkinter.constants import HORIZONTAL
 from tkinter.ttk import Progressbar
@@ -173,13 +174,25 @@ class Detect:
                 face_cascade=cv2.CascadeClassifier(self.cascade)
  
                 img = cv2.imread(toDetect, cv2.IMREAD_COLOR)
-
+                width=img.shape[1]
                 gray=cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-                face=face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=3)
-                
+                face=face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=4)
+                tab_face=[]
+                index=0
+                marge=50
                 for x, y, w, h in face:
-                    cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+                    
+                    if w >50:
+                        #tab_face.append([width-x, y, width-(x+w), y+h])
+                        cv2.rectangle(img, (x, y),  (x+w, y+h), (255, 0, 0), 2)
+                
+                #tab_face=sorted(tab_face, key=operator.itemgetter(0, 1))
+                #for x, y, x2, y2 in tab_face:
+                #    if not index or (x-tab_face[index-1][0]>marge or y-tab_face[index-1][1]>marge):
+                #        cv2.rectangle(img, (x, y), (x2, y2), (0, 0, 255), 2)
+                #    index+=1
+
                 
                 newTitle=pathResult+"/"+image
                 cv2.imwrite(newTitle, img)
@@ -349,3 +362,6 @@ class Loading:
     #Destruction de le fenêtre
     def destroy(self):
         self.window.destroy()
+
+#model = Detect()
+#model.imageSave("roumanie_14306c4d855f2d66d7431f3f87127c593ea077fa.jpg","C:/Users/Utilisateur/Downloads/Test images","C:/Users/Utilisateur/Downloads/testOral")
