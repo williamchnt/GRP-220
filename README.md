@@ -8,3 +8,6 @@ tkinter
 phil
 os
 progressBar
+
+## Start the programm :
+To start the application you need to run the python file "Application.py".
